@@ -3,6 +3,8 @@
     "banner": {
       "type": "main-banner",
       "settings": {
+        "image": "shopify:\/\/shop_images\/mujer-sosteniendo-bolsa-compras-viernes-negro.jpg",
+        "title": "Black Friday"
       }
     },
     "product-grid": {
