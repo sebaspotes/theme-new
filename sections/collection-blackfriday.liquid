@@ -1,11 +1,16 @@
 {{ 'collection-grid.css' | asset_url | stylesheet_tag }}
 
-<div class="grid-container">
-{% for product in collections['black-friday'].products %}
-        <div class="producto-grid">
-            <img src="{{ product.featured_image.src | product_img_url: 'medium' }}" alt="{{ product.title }}">
-            <h2>{{ product.title | link_to: product.url }}</h2>
-        </div>
-{% endfor %}
-</div>
+
+{% paginate collection.products by 10 %}
+    <div class="grid-container">
+        {% for product in collections['black-friday'].products %}
+                <div class="producto-grid">
+                    <img src="{{ product.featured_image.src | product_img_url: 'medium' }}" alt="{{ product.title }}">
+                    <h2>{{ product.title | link_to: product.url }}</h2>
+                </div>
+        {% endfor %} 
+    </div>
+{{ paginate | default_pagination }}
+{% endpaginate %}
+
 
