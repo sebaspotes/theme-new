@@ -1,0 +1,22 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Crea 4 columnas */
+    gap: 20px; /* Espacio entre elementos */
+    padding: 20px;
+  }
+  
+  .producto-grid {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .producto-grid img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .producto-grid h2 {
+    margin: 10px 0;
+    font-size: 18px;
+  }

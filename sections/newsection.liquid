@@ -24,17 +24,9 @@
 {%- endstyle -%}
 
 
+{% include 'img-with-text' %}
 
 
-
-<div class="{{ section.id }}">
-    <img class="img-{{ section.id }}" src="{{ section.settings.image | img_url: 'master'}}" alt="{{ section.settings.title }}" />
-    <div class="containertext-{{ section.id }}">
-        <h1 class="heading-{{ section.id }}">{{ section.settings.title }}</h1>
-        <div class="parrafo-{{ section.id }}">{{ section.settings.text }} </div>
-    </div>
-
-</div>
 
 {% schema %}
 

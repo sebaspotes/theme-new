@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-banner",
+      "settings": {
+      }
+    },
+    "product-grid": {
+      "type": "collection-blackfriday",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid"
+  ]
+}
