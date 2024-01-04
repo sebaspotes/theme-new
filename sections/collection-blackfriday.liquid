@@ -5,8 +5,22 @@
     <div class="grid-container">
         {% for product in collections['black-friday'].products %}
                 <div class="producto-grid">
-                    <img src="{{ product.featured_image.src | product_img_url: 'medium' }}" alt="{{ product.title }}">
-                    <h2>{{ product.title | link_to: product.url }}</h2>
+                    <a href="{{ product.url }}">
+                        <img src="{{ product.featured_image.src | product_img_url: 'medium'  }}" alt="{{ product.title }}">
+                    </a>
+                    <h3 class="full-unstyled-link">{{ product.title | link_to: product.url }}</h3>
+                    <div class="price__container"><span>{{ product.price | money}}</span></div>
+                    <select class="product-variants">
+                        {% for variant in product.variants %}
+                            {% if variant.inventory_quantity >= 5 %}
+                                <option value="{{ variant.id }}">{{ variant.title }}</option>
+                            {% elsif variant.inventory_quantity < 5 %}
+                                <option value="{{ variant.id }}">{{ variant.title }} - Last Items</option>
+                            {% else %}
+                                <option disabled="disabled">{{ variant.title }} - Sold out</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
         {% endfor %} 
     </div>

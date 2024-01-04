@@ -20,3 +20,9 @@
     margin: 10px 0;
     font-size: 18px;
   }
+
+  .grid-container .full-unstyled-link a{
+    text-decoration: none;
+    color: currentColor;
+    display: block;
+  }
