@@ -1,0 +1,19 @@
+<!-- upsell-section.liquid -->
+
+
+{% if product.metafields.custom.product_list %}
+    {{ product.metafields.custom.product_list }}
+    <h2>Productos recomendados</h2>
+    <div class="upsell-products">
+      {% for recommended_product in product.metafields.custom.product_list %}
+        <div class="upsell-product">
+          <a href="{{ recommended_product.url }}">
+            <img src="{{ recommended_product.image | img_url: 'medium' }}" alt="{{ recommended_product.title }}">
+            <p>{{ recommended_product.title }}</p>
+            <p>Precio: {{ recommended_product.price }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
