@@ -3,6 +3,12 @@
     "product-page": {
       "type": "main-product-sale",
       "settings": {
+        "red1_share_link": "https:\/\/twitter.com\/intent\/tweet?url",
+        "red1_share_icon": "shopify:\/\/shop_images\/gorjeo.png",
+        "red2_share_link": "https:\/\/www.facebook.com\/sharer\/sharer.php?u",
+        "red2_share_icon": "shopify:\/\/shop_images\/simbolo-de-la-aplicacion-de-facebook.png",
+        "red3_share_link": "https:\/\/www.instagram.com\/?url",
+        "red3_share_icon": "shopify:\/\/shop_images\/instagram.png"
       }
     }
   },
