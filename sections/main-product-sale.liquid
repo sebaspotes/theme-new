@@ -1,13 +1,373 @@
-<div id="main">
-	<h1 id="product_title">{{ product.title }}</h1>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Título de tu página</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* Estilos para las columnas */
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px 40px;
+    }
+
+    #product_title{
+      padding: 10px 40px;
+    }
+
+    .product-image-column {
+      flex: 1;
+      padding: 20px;
+      max-width: 50%;
+    }
+
+    .product-info-column {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* Estilos para las imágenes */
+    .product-image-column img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .product-single__thumbnails {
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .product-image-column ul {
+      list-style-type: none;
+    }
+
+    .product-single__thumbnails .selected img {
+      border: 2px solid #95a7b7;
+      border-radius: 10%;    
+    }
+
+    .items__thumbnails img {
+      padding: 10px 0px;
+      cursor: pointer;
+    }
+
+    label[for="size-select"]{
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    #size-select{    
+      width: 200px;
+      height: 30px;
+    }
+
+    .slick-next:before, .slick-prev:before{
+      color: #000;
+    }
+
+    .slick-prev {
+    left: 10px;
+    z-index: 1;
+    }
+
+    .slick-next {
+    right: 10px;
+    z-index: 1;
+    }
+    
+    /* CSS */
+  #color-options {
+    display: flex;
+    /* Ajusta el estilo del contenedor de los radios */
+  }
+
+  #color-options input[type="radio"] {
+    display: none;
+    /* Oculta los radios estándar */
+  }
+
+  #color-options label {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  #color-options span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  /* Estilos al seleccionar el input */
+  #color-options input[type="radio"]:checked + span {
+    border-width: 3px;
+  }
+
+  .btn-addtocart{
+    background-color: #033e47;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    width: 200px;
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 40px;
+  }
+
+  .product-share-links{
+    display: flex;
+    gap: 20px;
+  }
+
+  </style>
+</head>
+<body>
+  <div id="main">
+    <h1 id="product_title">{{ product.title }}</h1>
+  </div>
+
+  <div class="product-page">
+    <div class="product-image-column">
+      <div class="slider">
+        {% for image in product.images %}
+          <div>
+            <img class="product-image" src="{{ image | img_url: 'master' }}" alt="{{ product.title }}" />
+          </div>
+        {% endfor %}
+      </div>
+
+      <ul class="product-single__thumbnails">
+        {% for image in product.images %}
+          <li class="items__thumbnails">
+            <img src="{{ image | img_url: 'master' }}" alt="{{ product.title }}" />
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    <div class="product-info-column">
+      {% comment %} Verificar si el producto está en oferta {% endcomment %}
+      {% if product.compare_at_price > product.price %}
+        <p>
+          <span style="
+          color: red;
+          font-size: 20px;
+          font-weight: 600;
+          padding-right: 10px;">
+          {{ product.price | money }}</span> 
+          <span style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span>
+        </p>
+      {% else %}
+        <p>
+          {{ product.price | money }}
+        </p>
+      {% endif %}
+
+      <label for="size-select">Color</label>
+      <div id="color-options">
+        {% for color in product.options_by_name['color'].values %}
+              <label>
+                <input type="radio" name="color" value="{{ color | downcase }}" {% if forloop.first %}checked{% endif %} />
+                <span style="background-color: {{ color | downcase }};"></span>
+              </label>
+        {% endfor %}
+      </div>
+
+        </br>
+      <label for="size-select">Size</label>
+      <div>
+        <select id="size-select">
+          <option value="" disabled {% if forloop.first %}selected{% endif %}>Please select</option>
+          {%- for value in product.options_by_name['size'].values %}
+          <option>{{ value }}</option>
+          {%- endfor %}
+        </select>
+      </div>
+
+      <p id="selected-options-info"><b>Color:</b>   <b>Size:</b></p>
+
+      <div style="font-weight: 600; display: flex">Share: {% include 'product-share-links' %}</div>
+
+      <form method="post" action="/cart/add">
+      <input class="addtocart" type="hidden" name="id" value="44370441699543"  />
+      <button type="submit" class="btn-addtocart">
+      <i class="fa fa-shopping-cart"></i> Add to Cart
+      </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        fade: true
+      });
+
+      $('.product-single__thumbnails').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        asNavFor: '.slider',
+        dots: false,
+        focusOnSelect: true
+      });
+
+      $('.items__thumbnails:first-child').addClass('selected');
+
+
+      $('.items__thumbnails').on('click', function() {
+        var index = $(this).index();
+        $('.slider').slick('slickGoTo', index);
+        $('.items__thumbnails').removeClass('selected'); // Remover la clase 'selected' de todos los thumbnails
+        $(this).addClass('selected'); // Agregar la clase 'selected' al thumbnail seleccionado
+      });
+    });
+  </script>
+
+
+  <script>
+
+    var product = {{ product | json }};
+
+    console.log(product)
+    document.querySelectorAll('#color-options input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          var selectedOptions = [];
+
+          document.querySelectorAll('#color-options input[type="radio"]:checked').forEach(radio => {
+            selectedOptions.push(radio.value)
+            var selectedSize = document.getElementById('size-select').value;
+            selectedOptions.unshift(selectedSize)
+          })  
+          console.log(selectedOptions)
+
+          var matchedVariant = product.variants.find(variant => {
+          var pass = true;
+
+              for (var i = 0; i < selectedOptions.length; i++) {
+                if (selectedOptions.indexOf(variant.options[i]) === -1){
+                  pass = false;
+                  break;
+                }
+              }
+              return pass;
+            });
+      
+      console.log(matchedVariant)
+
+      var idVariant = matchedVariant.id
+      console.log(idVariant)
+      document.querySelector('input[name="id"]').value = idVariant;
+
+          // Actualizar el contenido del elemento <p> con el id 'selected-options-info'
+          var selectedOptionsInfo = document.getElementById('selected-options-info');
+          var colorToShow = selectedOptions[1] !== undefined ? selectedOptions[1] : '';
+          var sizeToShow = selectedOptions[0] !== undefined ? selectedOptions[0] : '';
+          var textToShow = `<b>Color:</b> ${colorToShow} <b style="padding-left: 10px;">Size:</b> ${sizeToShow}`;
+          selectedOptionsInfo.innerHTML = textToShow;
+          
+        })
+    });
+
+    document.getElementById('size-select').addEventListener('change', () => {
+      var selectedOptions = [];
+      var selectedSize = document.getElementById('size-select').value;
+      selectedOptions.unshift(selectedSize)
+      document.querySelectorAll('#color-options input[type="radio"]:checked').forEach(radio => {
+            selectedOptions.push(radio.value)
+            }) 
+      console.log(selectedOptions)
+
+      var matchedVariant = product.variants.find(variant => {
+        var pass = true;
+
+        for (var i = 0; i < selectedOptions.length; i++) {
+          if (selectedOptions.indexOf(variant.options[i]) === -1){
+            pass = false;
+            break;
+          }
+        }
+        return pass;
+      });
+      
+      console.log(matchedVariant)
+
+      var idVariant = matchedVariant.id
+      console.log(idVariant)
+      document.querySelector('input[name="id"]').value = idVariant;
+
+       // Actualizar el contenido del elemento <p> con el id 'selected-options-info'
+        var selectedOptionsInfo = document.getElementById('selected-options-info');
+        var colorToShow = selectedOptions[1] !== undefined ? selectedOptions[1] : '';
+        var sizeToShow = selectedOptions[0] !== undefined ? selectedOptions[0] : '';
+        var textToShow = `<b>Color:</b> ${colorToShow} <b style="padding-left: 10px;">Size:</b> ${sizeToShow}`;
+        selectedOptionsInfo.innerHTML = textToShow;
+    });
+
+    function matchVariant(x) {
+     
+    };
+
+    
+
+
+  </script> 
+</body>
+</html>
 
 
 {% schema %}
-    {
-      "name": "Main Product Sale",
-      "tag": "section",
-      "class": "section",
-        "settings": []
-    }
-{% endschema %}
+
+  {
+    "name": "Product Share Links",
+    "settings": [
+      {
+        "type": "text",
+        "id": "red1_share_link",
+        "label": "Enlace para compartir Red1"
+      },
+      {
+        "type": "image_picker",
+        "id": "red1_share_icon",
+        "label": "URL de la imagen/icono Red1"
+      },
+      {
+        "type": "text",
+        "id": "red2_share_link",
+        "label": "Enlace para compartir Red2"
+      },
+      {
+        "type": "image_picker",
+        "id": "red2_share_icon",
+        "label": "URL de la imagen/icono Red2"
+      },
+      {
+        "type": "text",
+        "id": "red3_share_link",
+        "label": "Enlace para compartir Red3"
+      },
+      {
+        "type": "image_picker",
+        "id": "red3_share_icon",
+        "label": "URL de la imagen/icono Red3"
+      }
+    ]
+  }
+  
+  {% endschema %}

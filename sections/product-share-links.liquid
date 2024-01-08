@@ -1,0 +1,54 @@
+<!-- product-share-links.liquid -->
+
+<div class="product-share-links">
+    <a href="{{ section.settings.red1_share_link }}={{ product.url }}" target="_blank" rel="noopener noreferrer"></a>
+    <img src="{{ section.settings.red1_share_icon }}" alt="Share 1">
+    </a>
+    <a href="{{ section.settings.red2_share_link }}={{ product.url }}" target="_blank" rel="noopener noreferrer"></a>
+    <img src="{{ section.settings.red2_share_icon }}" alt="Share 2">
+    </a>
+    <a href="{{ section.settings.red3_share_link }}={{ product.url }}" target="_blank" rel="noopener noreferrer"></a>
+    <img src="{{ section.settings.red3_share_icon }}" alt="Share 3">
+    </a>
+</div>
+
+
+{% schema %}
+
+{
+  "name": "Product Share Links",
+  "settings": [
+    {
+      "type": "text",
+      "id": "red1_share_link",
+      "label": "Enlace para compartir Red1"
+    },
+    {
+      "type": "text",
+      "id": "red1_share_icon",
+      "label": "URL de la imagen/icono Red1"
+    },
+    {
+      "type": "text",
+      "id": "red2_share_link",
+      "label": "Enlace para compartir Red2"
+    },
+    {
+      "type": "text",
+      "id": "red2_share_icon",
+      "label": "URL de la imagen/icono Red2"
+    },
+    {
+      "type": "text",
+      "id": "red3_share_link",
+      "label": "Enlace para compartir Red3"
+    },
+    {
+      "type": "text",
+      "id": "red3_share_icon",
+      "label": "URL de la imagen/icono Red3"
+    }
+  ]
+}
+
+{% endschema %}
